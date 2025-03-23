@@ -1,4 +1,4 @@
-# AMLogger
+# AMLogger Documentation
 
 Welcome to the comprehensive documentation for `AMLogger`, a standalone Swift package for powerful, structured, and privacy-aware logging. This documentation covers every aspect of the `API`, describes the various `logging` methods in detail, and explains how to integrate `AMLogger` into your project.
 

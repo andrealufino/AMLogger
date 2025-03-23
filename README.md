@@ -1,6 +1,6 @@
 ![logo](AMLogger_s.png "Logo")
 
-# AMLogger Documentation
+# AMLogger
 
 ## Overview
 AMLogger is a lightweight and powerful logging framework built atop Pulse and OSLog. It provides structured logging with modern Swift string interpolation and advanced privacy options. Whether you're developing for iOS, macOS, or other Apple platforms, AMLogger helps you manage your logs in a clear, secure, and scalable way.
