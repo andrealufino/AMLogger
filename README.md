@@ -1,4 +1,4 @@
-![logo](Sources/AMLogger/AMLogger.docc/Resources/AMLogger_s.png "Logo")
+![logo](AMLogger_s.png "Logo")
 
 # AMLogger
 
@@ -36,6 +36,9 @@ To create and use a logger:
     // Log a debug message using privacy options
     logger.debug("User login attempt: ", metadata: ["username": ("user@example.com", privacy: .private)])
 ```
+
+## Documentation
+See [Documentation](Documentation.md "Documentation") for more details about the library.
 
 ## Customization
 AMLogger allows you to extend its labels, adjust privacy levels, and even override how logs are handled. Whether you need a custom log format or additional metadata, the API is flexible enough to meet your needs.

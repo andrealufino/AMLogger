@@ -20,6 +20,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/kean/Pulse", branch: "main"),
+        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
