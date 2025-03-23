@@ -1,4 +1,4 @@
-![logo](Resources/AMLogger_s.png "Logo")
+![logo](Sources/AMLogger/AMLogger.docc/Resources/AMLogger_s.png "Logo")
 
 # AMLogger
 
