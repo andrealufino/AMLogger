@@ -122,7 +122,7 @@ public struct AMLogger: Sendable {
     static let privateLevelReplacementString: String = "🔒"
     
     /// The label associated with the logger instance.
-    public let label: AMLoggerLabel
+    public let label: Label
     
     /// The `Logger` object from the `OSLog` framework.
     private let logger: Logger
@@ -130,7 +130,7 @@ public struct AMLogger: Sendable {
     /// Init a new logger instance with a specific label associated to it.
     /// - Parameter subsystem: The subsystem associated to the logger. Default value is the bundle identifier.
     /// - Parameter label: The label associated to the logger.
-    public init(subsystem: String = Bundle.bundleIdentifier, label: AMLoggerLabel) {
+    public init(subsystem: String = Bundle.main.infoDictionary!["CFBundleIdentifier"] as! String, label: Label) {
         self.label = label
         self.logger = Logger.init(subsystem: subsystem, category: label.value)
     }
@@ -193,9 +193,9 @@ public extension AMLogger {
     
     /// Call this function to capture information that may be helpful, but isn’t essential, for troubleshooting.
     func info(
-        _ message: AMLoggerMessage,
+        _ message: Message,
         context: Any? = nil,
-        label: AMLoggerLabel? = nil,
+        label: Label? = nil,
         metadata: [String: Any]? = nil,
         file: String = #file,
         function: String = #function,
@@ -220,7 +220,7 @@ public extension AMLogger {
     
     /// Debug-level messages to use in a development environment while actively debugging.
     func debug(
-        _ message: AMLoggerMessage,
+        _ message: Message,
         context: Any? = nil,
         metadata: [String: Any]? = nil,
         file: String = #file,
@@ -246,9 +246,9 @@ public extension AMLogger {
     
     /// Warning-level messages for reporting unexpected non-fatal failures.
     func warning(
-        _ message: AMLoggerMessage,
+        _ message: Message,
         context: Any? = nil,
-        label: AMLoggerLabel? = nil,
+        label: Label? = nil,
         metadata: [String: Any]? = nil,
         file: String = #file,
         function: String = #function,
@@ -273,9 +273,9 @@ public extension AMLogger {
     
     /// Error-level messages for reporting critical errors and failures.
     func error(
-        _ message: AMLoggerMessage,
+        _ message: Message,
         context: Any? = nil,
-        label: AMLoggerLabel? = nil,
+        label: Label? = nil,
         metadata: [String: Any]? = nil,
         file: String = #file,
         function: String = #function,
@@ -300,7 +300,7 @@ public extension AMLogger {
     
     /// Fault-level messages for capturing system-level or multi-process errors only.
     func critical(
-        _ message: AMLoggerMessage,
+        _ message: Message,
         context: Any? = nil,
         metadata: [String: Any]? = nil,
         file: String = #file,
@@ -375,7 +375,7 @@ private extension AMLogger {
     ///   - function: The function.
     ///   - line: The line.
     /// - Returns: The formatted message to print.
-    func formatMessage(_ message: AMLoggerMessage, file: String, function: String, line: Int) -> String {
+    func formatMessage(_ message: Message, file: String, function: String, line: Int) -> String {
         
         let messageString = String("\(message.value)")
         let formattedFile = String(file.split(separator: "/").last!).split(separator: ".").first!
@@ -388,41 +388,75 @@ private extension AMLogger {
 // MARK: Loggers
 
 public extension AMLogger {
-    
-    static let generic: AMLogger                         = .init(label: .generic)
-    static let network: AMLogger                         = .init(label: .network)
-    static let viewLifecycle: AMLogger                   = .init(label: .viewLifecycle)
-    static let ui: AMLogger                              = .init(label: .ui)
-    static let database: AMLogger                        = .init(label: .database)
-    static let swiftData: AMLogger                       = .init(label: .swiftData)
-    static let coreData: AMLogger                        = .init(label: .coreData)
-    static let filesystem: AMLogger                      = .init(label: .filesystem)
-    static let swiftDataStoreMigration: AMLogger         = .init(label: .swiftDataStoreMigration)
-    static let swiftDataLightweightMigration: AMLogger   = .init(label: .swiftDataLightweightMigration)
-    static let swiftDataCustomMigration: AMLogger        = .init(label: .swiftDataCustomMigration)
-    static let realmMigration: AMLogger                  = .init(label: .realmMigration)
-    static let dataMigration: AMLogger                   = .init(label: .dataMigration)
-    static let dataModel: AMLogger                       = .init(label: .dataModel)
-    static let dataPersistence: AMLogger                 = .init(label: .dataPersistence)
-    static let dataValidation: AMLogger                  = .init(label: .dataValidation)
-    static let dataTransformation: AMLogger              = .init(label: .dataTransformation)
-    static let dataManipulation: AMLogger                = .init(label: .dataManipulation)
-    static let dataAccess: AMLogger                      = .init(label: .dataAccess)
-    static let dataCaching: AMLogger                     = .init(label: .dataCaching)
-    static let widget: AMLogger                          = .init(label: .widget)
-    static let homeScreenWidget: AMLogger                = .init(label: .homeScreenWidget)
-    static let lockScreenWidget: AMLogger                = .init(label: .lockScreenWidget)
-    static let api: AMLogger                             = .init(label: .api)
-    static let graphic: AMLogger                         = .init(label: .graphic)
-    static let social: AMLogger                          = .init(label: .social)
-    static let dateManagement: AMLogger                  = .init(label: .dateManagement)
-    static let localization: AMLogger                    = .init(label: .localization)
-    static let maps: AMLogger                            = .init(label: .maps)
-    static let animation: AMLogger                       = .init(label: .animation)
-    static let analytics: AMLogger                       = .init(label: .analytics)
-    static let performance: AMLogger                     = .init(label: .performance)
-    static let charts: AMLogger                          = .init(label: .charts)
-    static let storeKit: AMLogger                        = .init(label: .storeKit)
+
+    /// The logger for generic logs.
+    static let generic: AMLogger =                              .init(label: .generic)
+    /// The logger for network-related logs.
+    static let network: AMLogger =                              .init(label: .network)
+    /// The logger for view lifecycle-related logs.
+    static let viewLifecycle: AMLogger =                        .init(label: .viewLifecycle)
+    /// The logger for UI-related logs.
+    static let ui: AMLogger =                                   .init(label: .ui)
+    /// The logger for database-related logs.
+    static let database: AMLogger =                             .init(label: .database)
+    /// The logger for SwiftData-related logs.
+    static let swiftData: AMLogger =                            .init(label: .swiftData)
+    /// The logger for CoreData-related logs.
+    static let coreData: AMLogger =                             .init(label: .coreData)
+    /// The logger for filesystem-related logs.
+    static let filesystem: AMLogger =                           .init(label: .filesystem)
+    /// The logger for SwiftData store migration-related logs.
+    static let swiftDataStoreMigration: AMLogger =              .init(label: .swiftDataStoreMigration)
+    /// The logger for SwiftData lightweight migration-related logs.
+    static let swiftDataLightweightMigration: AMLogger =        .init(label: .swiftDataLightweightMigration)
+    /// The logger for SwiftData custom migration-related logs.
+    static let swiftDataCustomMigration: AMLogger =             .init(label: .swiftDataCustomMigration)
+    /// The logger for Realm migration-related logs.
+    static let realmMigration: AMLogger =                       .init(label: .realmMigration)
+    /// The logger for data migration-related logs.
+    static let dataMigration: AMLogger =                        .init(label: .dataMigration)
+    /// The logger for data model-related logs.
+    static let dataModel: AMLogger =                            .init(label: .dataModel)
+    /// The logger for data persistence-related logs.
+    static let dataPersistence: AMLogger =                      .init(label: .dataPersistence)
+    /// The logger for data validation-related logs.
+    static let dataValidation: AMLogger =                       .init(label: .dataValidation)
+    /// The logger for data transformation-related logs.
+    static let dataTransformation: AMLogger =                   .init(label: .dataTransformation)
+    /// The logger for data manipulation-related logs.
+    static let dataManipulation: AMLogger =                     .init(label: .dataManipulation)
+    /// The logger for data access-related logs.
+    static let dataAccess: AMLogger =                           .init(label: .dataAccess)
+    /// The logger for data caching-related logs.
+    static let dataCaching: AMLogger =                          .init(label: .dataCaching)
+    /// The logger for widget-related logs.
+    static let widget: AMLogger =                               .init(label: .widget)
+    /// The logger for home screen widget-related logs.
+    static let homeScreenWidget: AMLogger =                     .init(label: .homeScreenWidget)
+    /// The logger for lock screen widget-related logs.
+    static let lockScreenWidget: AMLogger =                     .init(label: .lockScreenWidget)
+    /// The logger for API-related logs.
+    static let api: AMLogger =                                  .init(label: .api)
+    /// The logger for graphic-related logs.
+    static let graphic: AMLogger =                              .init(label: .graphic)
+    /// The logger for social-related logs.
+    static let social: AMLogger =                               .init(label: .social)
+    /// The logger for date management-related logs.
+    static let dateManagement: AMLogger =                       .init(label: .dateManagement)
+    /// The logger for localization-related logs.
+    static let localization: AMLogger =                         .init(label: .localization)
+    /// The logger for maps-related logs.
+    static let maps: AMLogger =                                 .init(label: .maps)
+    /// The logger for animation-related logs.
+    static let animation: AMLogger =                            .init(label: .animation)
+    /// The logger for analytics-related logs.
+    static let analytics: AMLogger =                            .init(label: .analytics)
+    /// The logger for performance-related logs.
+    static let performance: AMLogger =                          .init(label: .performance)
+    /// The logger for charts-related logs.
+    static let charts: AMLogger =                               .init(label: .charts)
+    /// The logger for StoreKit-related logs.
+    static let storeKit: AMLogger =                             .init(label: .storeKit)
 }
 
 
@@ -444,162 +478,217 @@ private extension Dictionary where Key == String, Value == Any {
 
 // MARK: - Message
 
-/// This is the message passed to the `AMLogger`.
-///
-/// This offers the possibility to add options to the interpolated string, such as
-/// a privacy field (see ``AMLoggerPrivacy``).
-public struct AMLoggerMessage: ExpressibleByStringLiteral, ExpressibleByStringInterpolation {
+public extension AMLogger {
     
-    public struct AMLoggerInterpolation: StringInterpolationProtocol {
+    /// This is the message passed to the `AMLogger`.
+    ///
+    /// This offers the possibility to add options to the interpolated string, such as
+    /// a privacy field (see ``AMLoggerPrivacy``).
+    struct Message: ExpressibleByStringLiteral, ExpressibleByStringInterpolation {
         
-        public typealias StringLiteralType = String
-        
-        public var output: String = ""
-        public var components: [(value: String, privacy: AMLoggerPrivacy)] = []
-        
-        public init(literalCapacity: Int, interpolationCount: Int) {
-            output.reserveCapacity(literalCapacity)
-        }
-        
-        public mutating func appendLiteral(_ literal: String) {
-            components.append((literal, .public))
-            output += literal
-        }
-        
-        public mutating func appendInterpolation<T>(_ value: T, privacy: AMLoggerPrivacy = .public) {
+        public struct AMLoggerInterpolation: StringInterpolationProtocol {
             
-            components.append(("\(value)", privacy))
+            public typealias StringLiteralType = String
             
-            if isDebuggerAttached {
-                output += "\(value)"
-            } else {
-                switch privacy {
-                case .public:
+            public var output: String = ""
+            public var components: [(value: String, privacy: Privacy)] = []
+            
+            public init(literalCapacity: Int, interpolationCount: Int) {
+                output.reserveCapacity(literalCapacity)
+            }
+            
+            public mutating func appendLiteral(_ literal: String) {
+                components.append((literal, .public))
+                output += literal
+            }
+            
+            public mutating func appendInterpolation<T>(_ value: T, privacy: Privacy = .public) {
+                
+                components.append(("\(value)", privacy))
+                
+                if isDebuggerAttached {
                     output += "\(value)"
-                case .private:
-                    output += AMLogger.privateLevelReplacementString
-                case .hashed:
-                    let valueAsString = "\(value)"
-                    let valueAsData = Data(valueAsString.utf8)
-                    let hashedValue = SHA256.hash(data: valueAsData)
-                    output += "\(hashedValue.hexString)"
+                } else {
+                    switch privacy {
+                    case .public:
+                        output += "\(value)"
+                    case .private:
+                        output += AMLogger.privateLevelReplacementString
+                    case .hashed:
+                        let valueAsString = "\(value)"
+                        let valueAsData = Data(valueAsString.utf8)
+                        let hashedValue = SHA256.hash(data: valueAsData)
+                        let hashedString = hashedValue.compactMap { String(format: "%02x", $0) }.joined()
+                        output += "\(hashedString)"
+                    }
                 }
             }
+            
+            // TODO: Solve this issue.
+            // This will conflict with the function above, due to having the same name and params.
+            //        public mutating func appendInterpolation<T>(_ value: @autoclosure @escaping () -> T, privacy: AMLoggerPrivacy = .public) {
+            //
+            //            components.append(("\(String(describing: value))", privacy))
+            //
+            //            if isDebuggerAttached {
+            //                output += "\(String(describing: value))"
+            //            } else {
+            //                switch privacy {
+            //                case .public:
+            //                    output += "\(String(describing: value))"
+            //                case .private:
+            //                    output += AMLogger.privateLevelReplacementString
+            //                case .hashed:
+            //                    let valueAsString = "\(String(describing: value))"
+            //                    output += "\(valueAsString.hashValue)"
+            //                }
+            //            }
+            //        }
         }
         
-        // This will conflict with the function above, due to having the same name and params.
-//        public mutating func appendInterpolation<T>(_ value: @autoclosure @escaping () -> T, privacy: AMLoggerPrivacy = .public) {
-//
-//            components.append(("\(String(describing: value))", privacy))
-//
-//            if isDebuggerAttached {
-//                output += "\(String(describing: value))"
-//            } else {
-//                switch privacy {
-//                case .public:
-//                    output += "\(String(describing: value))"
-//                case .private:
-//                    output += AMLogger.privateLevelReplacementString
-//                case .hashed:
-//                    let valueAsString = "\(String(describing: value))"
-//                    output += "\(valueAsString.hashValue)"
-//                }
-//            }
-//        }
-    }
-    
-    /// The actual composed string after evaluating options.
-    public let value: String
-    /// The components of the string, as an array of tuple containing `string` and `privacy`.
-    public let components: [(value: String, privacy: AMLoggerPrivacy)]
-    
-    public init(stringLiteral value: String) {
-        self.value = value
-        self.components = [(value, .public)]
-    }
-    
-    public init<T>(value: T) {
-        self.value = "\(value)"
-        self.components = [("\(value)", .public)]
-    }
-    
-    public init(stringInterpolation: AMLoggerInterpolation) {
-        self.value = stringInterpolation.output
-        self.components = stringInterpolation.components
+        /// The actual composed string after evaluating options.
+        public let value: String
+        /// The components of the string, as an array of tuple containing `string` and `privacy`.
+        public let components: [(value: String, privacy: Privacy)]
+        
+        public init(stringLiteral value: String) {
+            self.value = value
+            self.components = [(value, .public)]
+        }
+        
+        public init<T>(value: T) {
+            self.value = "\(value)"
+            self.components = [("\(value)", .public)]
+        }
+        
+        public init(stringInterpolation: AMLoggerInterpolation) {
+            self.value = stringInterpolation.output
+            self.components = stringInterpolation.components
+        }
     }
 }
 
 
 // MARK: - Privacy
 
-/// This represents the privacy level of a single message.
-/// It's applied to the interpolation string in the `AMLoggerMessage`.
-public enum AMLoggerPrivacy: Hashable, Codable {
-    /// Public message.
-    case `public`
-    /// The private level.
-    ///
-    /// Using this privacy level will result in the string to be
-    /// replaced using the ``AMLogger/privateLevelReplacementString`` value.
-    case `private`
-    /// Using this privacy level will result in the string to be
-    /// replaced using its hash value. It could be useful to identify the same value,
-    /// keeping the privacy, within a debug session.
-    case hashed
+public extension AMLogger {
     
-    var isPublic: Bool      { self == .public }
-    var isPrivate: Bool     { self == .private }
-    var isHashed: Bool      { self == .hashed }
-    var isNotPublic: Bool   { !isPublic }
+    /// This represents the privacy level of a single message.
+    /// It's applied to the interpolation string in the `AMLoggerMessage`.
+    enum Privacy: Hashable, Codable {
+        /// Public message.
+        case `public`
+        /// The private level.
+        ///
+        /// Using this privacy level will result in the string to be
+        /// replaced using the ``AMLogger/privateLevelReplacementString`` value.
+        case `private`
+        /// Using this privacy level will result in the string to be
+        /// replaced using its hash value. It could be useful to identify the same value,
+        /// keeping the privacy, within a debug session.
+        case hashed
+        
+        /// `true` if the privacy level is public, `false` otherwise.
+        var isPublic: Bool      { self == .public }
+        /// `true` if the privacy level is private, `false` otherwise.
+        var isPrivate: Bool     { self == .private }
+        /// `true` if the privacy level is hashed, `false` otherwise.
+        var isHashed: Bool      { self == .hashed }
+        /// `true` if the privacy level is not public, `false` otherwise.
+        var isNotPublic: Bool   { !isPublic }
+    }
 }
 
 
 // MARK: - Label (or category)
 
-/// This struct offers common labels useful to categorize logs.
-/// The best practice would be to extend it if you need to add more categories.
-public struct AMLoggerLabel: Sendable {
+public extension AMLogger {
     
-    public let value: String
+    /// This is just a convenience typealias for `Label`.
+    typealias Category = Label
     
-    public init(_ value: String) {
-        self.value = value
+    /// This struct offers common labels useful to categorize logs.
+    /// The best practice would be to extend it if you need to add more categories.
+    struct Label: Sendable {
+        
+        /// The actual `String` value of the label.
+        public let value: String
+        
+        /// Init a new `Label` with the passed value.
+        /// - Parameter value: The value of the label.
+        public init(_ value: String) {
+            self.value = value
+        }
+        
+        /// This label should refer to generic type of logs.
+        public static let generic                           = Self.init("Generic")
+        /// This label should refer to network-related logs.
+        public static let network                           = Self.init("Network")
+        /// This label should refer to view lifecycle-related logs.
+        public static let viewLifecycle                     = Self.init("View Lifecycle")
+        /// This label should refer to UI-related logs.
+        public static let ui                                = Self.init("UI")
+        /// This label should refer to database-related logs.
+        public static let database                          = Self.init("Database")
+        /// This label should refer to SwiftData-related logs.
+        public static let swiftData                         = Self.init("SwiftData")
+        /// This label should refer to CoreData-related logs.
+        public static let coreData                          = Self.init("CoreData")
+        /// This label should refer to filesystem-related logs.
+        public static let filesystem                        = Self.init("Filesystem")
+        /// This label should refer to SwiftData store migration-related logs.
+        public static let swiftDataStoreMigration           = Self.init("SwiftData Store Migration")
+        /// This label should refer to SwiftData lightweight migration-related logs.
+        public static let swiftDataLightweightMigration     = Self.init("SwiftData Lightweight Migration")
+        /// This label should refer to SwiftData custom migration-related logs.
+        public static let swiftDataCustomMigration          = Self.init("SwiftData Custom Migration")
+        /// This label should refer to Realm migration-related logs.
+        public static let realmMigration                    = Self.init("Realm Migration")
+        /// This label should refer to data migration-related logs.
+        public static let dataMigration                     = Self.init("Data Migration")
+        /// This label should refer to data model-related logs.
+        public static let dataModel                         = Self.init("Data Model")
+        /// This label should refer to data persistence-related logs.
+        public static let dataPersistence                   = Self.init("Data Persistence")
+        /// This label should refer to data validation-related logs.
+        public static let dataValidation                    = Self.init("Data Validation")
+        /// This label should refer to data transformation-related logs.
+        public static let dataTransformation                = Self.init("Data Transformation")
+        /// This label should refer to data manipulation-related logs.
+        public static let dataManipulation                  = Self.init("Data Manipulation")
+        /// This label should refer to data access-related logs.
+        public static let dataAccess                        = Self.init("Data Access")
+        /// This label should refer to data caching-related logs.
+        public static let dataCaching                       = Self.init("Data Caching")
+        /// This label should refer to widget-related logs.
+        public static let widget                            = Self.init("Widget")
+        /// This label should refer to home screen widget-related logs.
+        public static let homeScreenWidget                  = Self.init("Home Screen Widget")
+        /// This label should refer to lock screen widget-related logs.
+        public static let lockScreenWidget                  = Self.init("Lock Screen Widget")
+        /// This label should refer to API-related logs.
+        public static let api                               = Self.init("API")
+        /// This label should refer to graphic-related logs.
+        public static let graphic                           = Self.init("Graphic")
+        /// This label should refer to social-related logs.
+        public static let social                            = Self.init("Social")
+        /// This label should refer to date management-related logs.
+        public static let dateManagement                    = Self.init("Date Management")
+        /// This label should refer to localization-related logs.
+        public static let localization                      = Self.init("Localization")
+        /// This label should refer to maps-related logs.
+        public static let maps                              = Self.init("Maps")
+        /// This label should refer to animation-related logs.
+        public static let animation                         = Self.init("Animation")
+        /// This label should refer to analytics-related logs.
+        public static let analytics                         = Self.init("Analytics")
+        /// This label should refer to performance-related logs.
+        public static let performance                       = Self.init("Performance")
+        /// This label should refer to charts-related logs.
+        public static let charts                            = Self.init("Charts")
+        /// This label should refer to StoreKit-related logs.
+        public static let storeKit                          = Self.init("StoreKit")
     }
-    
-    public static let generic                           = Self.init("Generic")
-    public static let network                           = Self.init("Network")
-    public static let viewLifecycle                     = Self.init("View Lifecycle")
-    public static let ui                                = Self.init("UI")
-    public static let database                          = Self.init("Database")
-    public static let swiftData                         = Self.init("SwiftData")
-    public static let coreData                          = Self.init("CoreData")
-    public static let filesystem                        = Self.init("Filesystem")
-    public static let swiftDataStoreMigration           = Self.init("SwiftData Store Migration")
-    public static let swiftDataLightweightMigration     = Self.init("SwiftData Lightweight Migration")
-    public static let swiftDataCustomMigration          = Self.init("SwiftData Custom Migration")
-    public static let realmMigration                    = Self.init("Realm Migration")
-    public static let dataMigration                     = Self.init("Data Migration")
-    public static let dataModel                         = Self.init("Data Model")
-    public static let dataPersistence                   = Self.init("Data Persistence")
-    public static let dataValidation                    = Self.init("Data Validation")
-    public static let dataTransformation                = Self.init("Data Transformation")
-    public static let dataManipulation                  = Self.init("Data Manipulation")
-    public static let dataAccess                        = Self.init("Data Access")
-    public static let dataCaching                       = Self.init("Data Caching")
-    public static let widget                            = Self.init("Widget")
-    public static let homeScreenWidget                  = Self.init("Home Screen Widget")
-    public static let lockScreenWidget                  = Self.init("Lock Screen Widget")
-    public static let api                               = Self.init("API")
-    public static let graphic                           = Self.init("Graphic")
-    public static let social                            = Self.init("Social")
-    public static let dateManagement                    = Self.init("Date Management")
-    public static let localization                      = Self.init("Localization")
-    public static let maps                              = Self.init("Maps")
-    public static let animation                         = Self.init("Animation")
-    public static let analytics                         = Self.init("Analytics")
-    public static let performance                       = Self.init("Performance")
-    public static let charts                            = Self.init("Charts")
-    public static let storeKit                          = Self.init("StoreKit")
 }
 
 #endif
