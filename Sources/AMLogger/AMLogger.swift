@@ -388,41 +388,75 @@ private extension AMLogger {
 // MARK: Loggers
 
 public extension AMLogger {
-    
-    static let generic: AMLogger                         = .init(label: .generic)
-    static let network: AMLogger                         = .init(label: .network)
-    static let viewLifecycle: AMLogger                   = .init(label: .viewLifecycle)
-    static let ui: AMLogger                              = .init(label: .ui)
-    static let database: AMLogger                        = .init(label: .database)
-    static let swiftData: AMLogger                       = .init(label: .swiftData)
-    static let coreData: AMLogger                        = .init(label: .coreData)
-    static let filesystem: AMLogger                      = .init(label: .filesystem)
-    static let swiftDataStoreMigration: AMLogger         = .init(label: .swiftDataStoreMigration)
-    static let swiftDataLightweightMigration: AMLogger   = .init(label: .swiftDataLightweightMigration)
-    static let swiftDataCustomMigration: AMLogger        = .init(label: .swiftDataCustomMigration)
-    static let realmMigration: AMLogger                  = .init(label: .realmMigration)
-    static let dataMigration: AMLogger                   = .init(label: .dataMigration)
-    static let dataModel: AMLogger                       = .init(label: .dataModel)
-    static let dataPersistence: AMLogger                 = .init(label: .dataPersistence)
-    static let dataValidation: AMLogger                  = .init(label: .dataValidation)
-    static let dataTransformation: AMLogger              = .init(label: .dataTransformation)
-    static let dataManipulation: AMLogger                = .init(label: .dataManipulation)
-    static let dataAccess: AMLogger                      = .init(label: .dataAccess)
-    static let dataCaching: AMLogger                     = .init(label: .dataCaching)
-    static let widget: AMLogger                          = .init(label: .widget)
-    static let homeScreenWidget: AMLogger                = .init(label: .homeScreenWidget)
-    static let lockScreenWidget: AMLogger                = .init(label: .lockScreenWidget)
-    static let api: AMLogger                             = .init(label: .api)
-    static let graphic: AMLogger                         = .init(label: .graphic)
-    static let social: AMLogger                          = .init(label: .social)
-    static let dateManagement: AMLogger                  = .init(label: .dateManagement)
-    static let localization: AMLogger                    = .init(label: .localization)
-    static let maps: AMLogger                            = .init(label: .maps)
-    static let animation: AMLogger                       = .init(label: .animation)
-    static let analytics: AMLogger                       = .init(label: .analytics)
-    static let performance: AMLogger                     = .init(label: .performance)
-    static let charts: AMLogger                          = .init(label: .charts)
-    static let storeKit: AMLogger                        = .init(label: .storeKit)
+
+    /// The logger for generic logs.
+    static let generic: AMLogger =                              .init(label: .generic)
+    /// The logger for network-related logs.
+    static let network: AMLogger =                              .init(label: .network)
+    /// The logger for view lifecycle-related logs.
+    static let viewLifecycle: AMLogger =                        .init(label: .viewLifecycle)
+    /// The logger for UI-related logs.
+    static let ui: AMLogger =                                   .init(label: .ui)
+    /// The logger for database-related logs.
+    static let database: AMLogger =                             .init(label: .database)
+    /// The logger for SwiftData-related logs.
+    static let swiftData: AMLogger =                            .init(label: .swiftData)
+    /// The logger for CoreData-related logs.
+    static let coreData: AMLogger =                             .init(label: .coreData)
+    /// The logger for filesystem-related logs.
+    static let filesystem: AMLogger =                           .init(label: .filesystem)
+    /// The logger for SwiftData store migration-related logs.
+    static let swiftDataStoreMigration: AMLogger =              .init(label: .swiftDataStoreMigration)
+    /// The logger for SwiftData lightweight migration-related logs.
+    static let swiftDataLightweightMigration: AMLogger =        .init(label: .swiftDataLightweightMigration)
+    /// The logger for SwiftData custom migration-related logs.
+    static let swiftDataCustomMigration: AMLogger =             .init(label: .swiftDataCustomMigration)
+    /// The logger for Realm migration-related logs.
+    static let realmMigration: AMLogger =                       .init(label: .realmMigration)
+    /// The logger for data migration-related logs.
+    static let dataMigration: AMLogger =                        .init(label: .dataMigration)
+    /// The logger for data model-related logs.
+    static let dataModel: AMLogger =                            .init(label: .dataModel)
+    /// The logger for data persistence-related logs.
+    static let dataPersistence: AMLogger =                      .init(label: .dataPersistence)
+    /// The logger for data validation-related logs.
+    static let dataValidation: AMLogger =                       .init(label: .dataValidation)
+    /// The logger for data transformation-related logs.
+    static let dataTransformation: AMLogger =                   .init(label: .dataTransformation)
+    /// The logger for data manipulation-related logs.
+    static let dataManipulation: AMLogger =                     .init(label: .dataManipulation)
+    /// The logger for data access-related logs.
+    static let dataAccess: AMLogger =                           .init(label: .dataAccess)
+    /// The logger for data caching-related logs.
+    static let dataCaching: AMLogger =                          .init(label: .dataCaching)
+    /// The logger for widget-related logs.
+    static let widget: AMLogger =                               .init(label: .widget)
+    /// The logger for home screen widget-related logs.
+    static let homeScreenWidget: AMLogger =                     .init(label: .homeScreenWidget)
+    /// The logger for lock screen widget-related logs.
+    static let lockScreenWidget: AMLogger =                     .init(label: .lockScreenWidget)
+    /// The logger for API-related logs.
+    static let api: AMLogger =                                  .init(label: .api)
+    /// The logger for graphic-related logs.
+    static let graphic: AMLogger =                              .init(label: .graphic)
+    /// The logger for social-related logs.
+    static let social: AMLogger =                               .init(label: .social)
+    /// The logger for date management-related logs.
+    static let dateManagement: AMLogger =                       .init(label: .dateManagement)
+    /// The logger for localization-related logs.
+    static let localization: AMLogger =                         .init(label: .localization)
+    /// The logger for maps-related logs.
+    static let maps: AMLogger =                                 .init(label: .maps)
+    /// The logger for animation-related logs.
+    static let animation: AMLogger =                            .init(label: .animation)
+    /// The logger for analytics-related logs.
+    static let analytics: AMLogger =                            .init(label: .analytics)
+    /// The logger for performance-related logs.
+    static let performance: AMLogger =                          .init(label: .performance)
+    /// The logger for charts-related logs.
+    static let charts: AMLogger =                               .init(label: .charts)
+    /// The logger for StoreKit-related logs.
+    static let storeKit: AMLogger =                             .init(label: .storeKit)
 }
 
 
@@ -484,11 +518,13 @@ public extension AMLogger {
                         let valueAsString = "\(value)"
                         let valueAsData = Data(valueAsString.utf8)
                         let hashedValue = SHA256.hash(data: valueAsData)
-                        output += "\(hashedValue.hashValue)"
+                        let hashedString = hashedValue.compactMap { String(format: "%02x", $0) }.joined()
+                        output += "\(hashedString)"
                     }
                 }
             }
             
+            // TODO: Solve this issue.
             // This will conflict with the function above, due to having the same name and params.
             //        public mutating func appendInterpolation<T>(_ value: @autoclosure @escaping () -> T, privacy: AMLoggerPrivacy = .public) {
             //
@@ -552,9 +588,13 @@ public extension AMLogger {
         /// keeping the privacy, within a debug session.
         case hashed
         
+        /// `true` if the privacy level is public, `false` otherwise.
         var isPublic: Bool      { self == .public }
+        /// `true` if the privacy level is private, `false` otherwise.
         var isPrivate: Bool     { self == .private }
+        /// `true` if the privacy level is hashed, `false` otherwise.
         var isHashed: Bool      { self == .hashed }
+        /// `true` if the privacy level is not public, `false` otherwise.
         var isNotPublic: Bool   { !isPublic }
     }
 }
@@ -580,39 +620,73 @@ public extension AMLogger {
             self.value = value
         }
         
+        /// This label should refer to generic type of logs.
         public static let generic                           = Self.init("Generic")
+        /// This label should refer to network-related logs.
         public static let network                           = Self.init("Network")
+        /// This label should refer to view lifecycle-related logs.
         public static let viewLifecycle                     = Self.init("View Lifecycle")
+        /// This label should refer to UI-related logs.
         public static let ui                                = Self.init("UI")
+        /// This label should refer to database-related logs.
         public static let database                          = Self.init("Database")
+        /// This label should refer to SwiftData-related logs.
         public static let swiftData                         = Self.init("SwiftData")
+        /// This label should refer to CoreData-related logs.
         public static let coreData                          = Self.init("CoreData")
+        /// This label should refer to filesystem-related logs.
         public static let filesystem                        = Self.init("Filesystem")
+        /// This label should refer to SwiftData store migration-related logs.
         public static let swiftDataStoreMigration           = Self.init("SwiftData Store Migration")
+        /// This label should refer to SwiftData lightweight migration-related logs.
         public static let swiftDataLightweightMigration     = Self.init("SwiftData Lightweight Migration")
+        /// This label should refer to SwiftData custom migration-related logs.
         public static let swiftDataCustomMigration          = Self.init("SwiftData Custom Migration")
+        /// This label should refer to Realm migration-related logs.
         public static let realmMigration                    = Self.init("Realm Migration")
+        /// This label should refer to data migration-related logs.
         public static let dataMigration                     = Self.init("Data Migration")
+        /// This label should refer to data model-related logs.
         public static let dataModel                         = Self.init("Data Model")
+        /// This label should refer to data persistence-related logs.
         public static let dataPersistence                   = Self.init("Data Persistence")
+        /// This label should refer to data validation-related logs.
         public static let dataValidation                    = Self.init("Data Validation")
+        /// This label should refer to data transformation-related logs.
         public static let dataTransformation                = Self.init("Data Transformation")
+        /// This label should refer to data manipulation-related logs.
         public static let dataManipulation                  = Self.init("Data Manipulation")
+        /// This label should refer to data access-related logs.
         public static let dataAccess                        = Self.init("Data Access")
+        /// This label should refer to data caching-related logs.
         public static let dataCaching                       = Self.init("Data Caching")
+        /// This label should refer to widget-related logs.
         public static let widget                            = Self.init("Widget")
+        /// This label should refer to home screen widget-related logs.
         public static let homeScreenWidget                  = Self.init("Home Screen Widget")
+        /// This label should refer to lock screen widget-related logs.
         public static let lockScreenWidget                  = Self.init("Lock Screen Widget")
+        /// This label should refer to API-related logs.
         public static let api                               = Self.init("API")
+        /// This label should refer to graphic-related logs.
         public static let graphic                           = Self.init("Graphic")
+        /// This label should refer to social-related logs.
         public static let social                            = Self.init("Social")
+        /// This label should refer to date management-related logs.
         public static let dateManagement                    = Self.init("Date Management")
+        /// This label should refer to localization-related logs.
         public static let localization                      = Self.init("Localization")
+        /// This label should refer to maps-related logs.
         public static let maps                              = Self.init("Maps")
+        /// This label should refer to animation-related logs.
         public static let animation                         = Self.init("Animation")
+        /// This label should refer to analytics-related logs.
         public static let analytics                         = Self.init("Analytics")
+        /// This label should refer to performance-related logs.
         public static let performance                       = Self.init("Performance")
+        /// This label should refer to charts-related logs.
         public static let charts                            = Self.init("Charts")
+        /// This label should refer to StoreKit-related logs.
         public static let storeKit                          = Self.init("StoreKit")
     }
 }

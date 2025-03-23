@@ -1,6 +1,6 @@
 ![logo](AMLogger_s.png "Logo")
 
-# AMLogger
+# AMLogger Documentation
 
 ## Overview
 AMLogger is a lightweight and powerful logging framework built atop Pulse and OSLog. It provides structured logging with modern Swift string interpolation and advanced privacy options. Whether you're developing for iOS, macOS, or other Apple platforms, AMLogger helps you manage your logs in a clear, secure, and scalable way.
@@ -24,17 +24,17 @@ Add AMLogger as a dependency via Swift Package Manager. Once added, import AMLog
 To create and use a logger:
 
 ```swift
-    // Create an instance of AMLogger with a subsystem and a label.
-    let logger = AMLogger(subsystem: "com.yourcompany.yourapp", label: .generic)
-    
-    // Log an informational message
-    logger.info("Application started successfully.")
-    
-    // Log an error message with metadata
-    logger.error("Unable to load configuration", metadata: ["filename": "config.json"])
-    
-    // Log a debug message using privacy options
-    logger.debug("User login attempt: ", metadata: ["username": ("user@example.com", privacy: .private)])
+// Create an instance of AMLogger with a subsystem and a label.
+let logger = AMLogger(subsystem: "com.yourcompany.yourapp", label: .generic)
+
+// Log an informational message
+logger.info("Application started successfully.")
+
+// Log an error message with metadata
+logger.error("Unable to load configuration", metadata: ["filename": "config.json"])
+
+// Log a debug message using privacy options
+logger.debug("User login attempt: ", metadata: ["username": ("user@example.com", privacy: .private)])
 ```
 
 ## Documentation
