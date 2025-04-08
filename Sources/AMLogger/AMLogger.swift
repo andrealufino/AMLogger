@@ -6,13 +6,13 @@
 //
 
 
-#if canImport(Pulse) && canImport(PulseUI) && canImport(OSLog)
+#if canImport(Pulse) && canImport(PulseUI) && canImport(OSLog) && canImport(CryptoKit)
+import CryptoKit
 import Foundation
 import OSLog
 import SwiftUI
-#if canImport(UIKit) && canImport(CryptoKit)
+#if canImport(UIKit)
 import UIKit
-import CryptoKit
 #endif
 
 import Pulse
